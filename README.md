@@ -18,11 +18,12 @@ CUDA_VISIBLE_DEVICES=2 python bin/train_siamfc.py --data_dir /dataset_ssd/vid15r
 
 CUDA_VISIBLE_DEVICES=2 python bin/test_OTB.py -ms ./models/siamrpn_* -v cvpr2013
 
-python version == 3.6.5
+python version == 3.6
 
-pytorch version == 0.4.0
+pytorch version == 1.0
 
 ## Reference
 
 [1] Li B , Yan J , Wu W , et al. High Performance Visual Tracking with Siamese Region Proposal Network[C]// 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2018.
-[2]Abdelpakey, Mohamed H., Mohamed S. Shehata, and Mostafa M. Mohamed. "DensSiam: End-to-End Densely-Siamese Network with Self-Attention Model for Object Tracking." In International Symposium on Visual Computing, pp. 463-473. Springer, Cham, 2018.(https://arxiv.org/abs/1809.02714)
+
+[2] Abdelpakey, Mohamed H., Mohamed S. Shehata, and Mostafa M. Mohamed. "DensSiam: End-to-End Densely-Siamese Network with Self-Attention Model for Object Tracking." In International Symposium on Visual Computing, pp. 463-473. Springer, Cham, 2018.(https://arxiv.org/abs/1809.02714)
