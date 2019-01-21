@@ -17,10 +17,10 @@ class Config:
     train_num_workers = 4                  # number of workers of train dataloader
     valid_num_workers = 4                  # number of workers of validation dataloader
 
-    start_lr = 3e-4
-    end_lr = 1e-6
-    warm_epoch = 0
-    warm_lr = 1e-3
+    start_lr = 1e-6
+    end_lr = 1e-8
+    warm_epoch = 5
+    warm_lr = 1e-6
     warm_scale = warm_lr/start_lr
     epoch = 50
     lr = np.logspace(np.log10(start_lr), np.log10(end_lr), num=epoch)[0]
@@ -47,7 +47,7 @@ class Config:
     num_neg = 48
     lamb = 100
     save_interval = 1
-    show_interval = 100
+    show_interval = 10
     pretrained_model = None 
 
     # tracking related
