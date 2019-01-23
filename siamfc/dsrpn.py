@@ -110,7 +110,7 @@ class RDN(nn.Module):
         self.dense_block2 = DenseBlock(36,36,4)
         self.transition2 = transitionlayer(self.dense_block2.out_channels,36)
         self.dense_block3 = DenseBlock(36,36,6)
-        self.dense_block4 = DenseBlock_b(in_channels=252,kernel_size=7)
+        self.dense_block4 = DenseBlock_b(in_channels=252,kernel_size=3)
     def forward(self,x):
         x = self.conv1(x)
 
@@ -155,19 +155,19 @@ class DenseBlock_b(nn.Sequential):
         self.in_channels = in_channels
         self.kernel_size = kernel_size
         self.add_module('bn1',nn.BatchNorm2d(num_features=self.in_channels))
-        self.add_module('relu',nn.ReLU(inplace=True))
+        self.add_module('relu1',nn.ReLU(inplace=True))
         self.add_module('conv1',nn.Conv2d(self.in_channels,out_channels=384,kernel_size=self.kernel_size))
-        self.add_module('dropout',nn.Dropout2d(0.2,inplace=True))
+        self.add_module('dropout1',nn.Dropout2d(0.2,inplace=True))
 
-        self.add_module('bn1',nn.BatchNorm2d(num_features=self.in_channels))
-        self.add_module('relu',nn.ReLU(inplace=True))
-        self.add_module('conv1',nn.Conv2d(self.in_channels,out_channels=384,kernel_size=self.kernel_size))
-        self.add_module('dropout',nn.Dropout2d(0.2,inplace=True))
+        self.add_module('bn2',nn.BatchNorm2d(num_features=384))
+        self.add_module('relu2',nn.ReLU(inplace=True))
+        self.add_module('conv2',nn.Conv2d(384,out_channels=384,kernel_size=self.kernel_size))
+        self.add_module('dropout2',nn.Dropout2d(0.2,inplace=True))
 
-        self.add_module('bn1',nn.BatchNorm2d(num_features=self.in_channels))
-        self.add_module('relu',nn.ReLU(inplace=True))
-        self.add_module('conv1',nn.Conv2d(self.in_channels,out_channels=256,kernel_size=self.kernel_size))
-        self.add_module('dropout',nn.Dropout2d(0.2,inplace=True))
+        self.add_module('bn3',nn.BatchNorm2d(num_features=384))
+        self.add_module('relu3',nn.ReLU(inplace=True))
+        self.add_module('conv3',nn.Conv2d(384,out_channels=256,kernel_size=self.kernel_size))
+        self.add_module('dropout3',nn.Dropout2d(0.2,inplace=True))
 
 class DenseLayer(nn.Sequential):
     r"""
