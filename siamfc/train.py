@@ -23,7 +23,8 @@ from collections import OrderedDict
 
 from .config import config
 # from .dsrpn import DenseSiamese
-from .dsrpn_plus import DenseSiamese
+# from .dsrpn_plus import DenseSiamese
+from .dsrpn_ex import DenseSiamese
 # from .alexnet import SiameseAlexNet
 from .dataset import ImagnetVIDDataset
 from .custom_transforms import Normalize, ToTensor, RandomStretch, \
