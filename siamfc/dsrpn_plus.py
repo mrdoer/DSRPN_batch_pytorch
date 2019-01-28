@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-# from .custom_transforms import ToTensor
+from .custom_transforms import ToTensor
 
 from torchvision.models import alexnet
 from torch.autograd import Variable
@@ -10,7 +10,7 @@ from torch import nn
 from torch.nn import init
 
 from IPython import embed
-# from .config import config
+from .config import config
 
 class RDN(nn.Module):
     def __init__(self):
@@ -89,11 +89,12 @@ class DenseLayer(nn.Sequential):
 
         self.add_module('norm1', nn.BatchNorm2d(num_features=in_channels))
         self.add_module('relu1', nn.ReLU(inplace=True))
-        self.add_module('conv1', nn.Conv2d(in_channels, out_channels*4, kernel_size=1, padding=0, bias=False))
+        self.add_module('conv1', nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False))
+       # self.add_module('conv1', nn.Conv2d(in_channels, out_channels*4, kernel_size=1, padding=0, bias=False))
 
-        self.add_module('norm3', nn.BatchNorm2d(num_features=out_channels*4))
-        self.add_module('relu3', nn.ReLU(inplace=True))
-        self.add_module('conv3', nn.Conv2d(out_channels*4, out_channels, kernel_size=3, padding=1, bias=False))
+       # self.add_module('norm3', nn.BatchNorm2d(num_features=out_channels*4))
+       # self.add_module('relu3', nn.ReLU(inplace=True))
+       # self.add_module('conv3', nn.Conv2d(out_channels*4, out_channels, kernel_size=3, padding=1, bias=False))
         if dropout > 0:
             self.add_module('drop', nn.Dropout2d(dropout, inplace=True))
 
