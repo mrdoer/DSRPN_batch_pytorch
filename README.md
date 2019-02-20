@@ -14,14 +14,6 @@ python bin/create_lmdb.py --data-dir /dataset_ssd/vid15rpn_finetune --output-dir
 
 CUDA_VISIBLE_DEVICES=2 python bin/train_siamfc.py --data_dir /dataset_ssd/vid15rpn_large
 
-## Test phase:
-
-CUDA_VISIBLE_DEVICES=2 python bin/test_OTB.py -ms ./models/siamrpn_* -v cvpr2013
-
-python version == 3.6
-
-pytorch version == 1.0
-
 ## Reference
 
 [1] Li B , Yan J , Wu W , et al. High Performance Visual Tracking with Siamese Region Proposal Network[C]// 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). IEEE, 2018.
