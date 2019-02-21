@@ -12,17 +12,18 @@ class Config:
     num_per_epoch = 4 * 53200              # num of samples per epoch
     train_ratio = 0.95                     # training ratio of VID dataset
     frame_range = 100                      # frame range of choosing the instance
-    train_batch_size = 64                  # training batch size
-    valid_batch_size = 8                   # validation batch size
+    train_batch_size = 32                  # training batch size
+    valid_batch_size = 8                  # validation batch size
     train_num_workers = 4                  # number of workers of train dataloader
     valid_num_workers = 4                  # number of workers of validation dataloader
 
-    start_lr = 1e-6
-    end_lr = 1e-6
-    warm_epoch = 1
-    warm_lr = 1e-7
+    clip=10
+    start_lr = 1e-3
+    end_lr = 1e-5
+    warm_epoch = None 
+    warm_lr = 1e-6
     warm_scale = warm_lr/start_lr
-    epoch = 50
+    epoch = 100
     lr = np.logspace(np.log10(start_lr), np.log10(end_lr), num=epoch)[0]
     gamma = np.logspace(np.log10(start_lr), np.log10(end_lr), num=epoch)[1] / \
             np.logspace(np.log10(start_lr), np.log10(end_lr), num=epoch)[0]
@@ -36,6 +37,7 @@ class Config:
     max_translate = 12                     # max translation of random shift
     scale_resize = 0.15                    # scale step of instance image
     total_stride = 8                       # total stride of backbone
+    total_stride_stage2 = 8                       # total stride of backbone
     valid_scope = int((instance_size - exemplar_size) / total_stride / 2)
     anchor_scales = np.array([8, ])
     anchor_ratios = np.array([0.33, 0.5, 1, 2, 3])

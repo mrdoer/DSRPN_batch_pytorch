@@ -25,8 +25,7 @@ from .config import config
 # from .dsrpn import DenseSiamese
 # from .dsrpn_plus import DenseSiamese
 #from .dsrpn_ex import DenseSiamese
-from .rdsrpn import DenseSiamese
-# from .alexnet import SiameseAlexNet
+from .alexnet import SiameseAlexNet
 from .dataset import ImagnetVIDDataset
 from .custom_transforms import Normalize, ToTensor, RandomStretch, \
     RandomCrop, CenterCrop, RandomBlur, ColorAug
@@ -264,7 +263,7 @@ def train(data_dir, model_path=None, vis_port=None, init=None):
             exemplar_imgs, instance_imgs, regression_target, conf_target = data
             # conf_target (8,1125) (8,225x5)
             regression_target, conf_target = regression_target.cuda(), conf_target.cuda()
-            #np.savetxt('conf_target.txt',conf_target.cpu().detach().numpy())
+
             pred_score, pred_regression = model(exemplar_imgs.cuda(), instance_imgs.cuda())
 
             pred_conf = pred_score.reshape(-1, 2, config.anchor_num * config.score_size * config.score_size).permute(0,
@@ -281,7 +280,6 @@ def train(data_dir, model_path=None, vis_port=None, init=None):
 
             optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), config.clip)
             optimizer.step()
             step = (epoch - 1) * len(trainloader) + i
             summary_writer.add_scalar('train/loss', loss.data, step)
@@ -294,8 +292,8 @@ def train(data_dir, model_path=None, vis_port=None, init=None):
             #     vis.plot_error({'rpn_cls_loss': cls_loss.detach().cpu().numpy().ravel()[0],
             #                     'rpn_regress_loss': reg_loss.detach().cpu().numpy().ravel()[0]}, win=0)
             if (i + 1) % config.show_interval == 0:
-                tqdm.write("[epoch %2d][iter %4d] cls_loss: %.4f, reg_loss: %.4f, loss: %.4f lr: %.2e"
-                           % (epoch, i, loss_temp_cls / config.show_interval, loss_temp_reg / config.show_interval,loss_temp_cls / config.show_interval + 100*loss_temp_reg / config.show_interval,
+                tqdm.write("[epoch %2d][iter %4d] cls_loss: %.4f, reg_loss: %.4f lr: %.2e"
+                           % (epoch, i, loss_temp_cls / config.show_interval, loss_temp_reg / config.show_interval,
                               optimizer.param_groups[0]['lr']))
                 loss_temp_cls = 0
                 loss_temp_reg = 0
@@ -380,10 +378,8 @@ def train(data_dir, model_path=None, vis_port=None, init=None):
                                   valid_loss, (epoch + 1) * len(trainloader))
         adjust_learning_rate(optimizer,
                              config.gamma)  # adjust before save, and it will be epoch+1's lr when next load
-        print('res_long resize: x_i {}'.format(x_i.shape))
-        prrrint('res_long resize: x_i {}'.format(x_i.shape))
         if epoch % config.save_interval == 0:
-            save_name = "./models/siamrpn_{}_chh.pth".format(epoch)
+            save_name = "./models/siamrpn_{}.pth".format(epoch)
             new_state_dict = model.state_dict()
             if torch.cuda.device_count() > 1:
                 new_state_dict = OrderedDict()
