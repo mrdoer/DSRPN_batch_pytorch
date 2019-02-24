@@ -380,8 +380,8 @@ def train(data_dir, model_path=None, vis_port=None, init=None):
                                   valid_loss, (epoch + 1) * len(trainloader))
         adjust_learning_rate(optimizer,
                              config.gamma)  # adjust before save, and it will be epoch+1's lr when next load
-        print('res_long resize: x_i {}'.format(x_i.shape))
-        prrrint('res_long resize: x_i {}'.format(x_i.shape))
+        #print('res_long resize: x_i {}'.format(x_i.shape))
+       # prrrint('res_long resize: x_i {}'.format(x_i.shape))
         if epoch % config.save_interval == 0:
             save_name = "./models/siamrpn_{}_chh.pth".format(epoch)
             new_state_dict = model.state_dict()

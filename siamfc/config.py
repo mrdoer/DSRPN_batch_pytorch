@@ -18,7 +18,7 @@ class Config:
     valid_num_workers = 4                  # number of workers of validation dataloader
 
     clip=10
-    start_lr = 1e-2
+    start_lr = 1e-3
     end_lr = 1e-5
     warm_epoch = None 
     warm_lr = 1e-6
